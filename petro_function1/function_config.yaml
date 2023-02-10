@@ -4,6 +4,9 @@ description: "This function does an important job. Yes :doge:"
 owner: The Awesome Forge Team
 cpu: 0.1
 memory: 0.2
+data_set_id: 1538933333954333
+cdf_project: "accenture-tiger-training"
+cdf_cluster: "api"
 metadata:  # optional metadata mapping
   version: "1.0.0"
 # Parameters that are usually not needed to pass (they have good default values):

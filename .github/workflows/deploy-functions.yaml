@@ -99,11 +99,11 @@ jobs:
           # Individual parameters per function we read from 'common/functions_config_[environment].yaml', 'function_config.yaml' and 'function_config_[environment].yaml:
           # cdf_project: ${{ steps.extract_params.outputs.cdf_project }}
           # cdf_cluster: ${{ steps.extract_params.outputs.cdf_cluster }}
-          # data_set_id: ${{ steps.extract_params.outputs.data_set_id }}
+          data_set_id: ${{ steps.extract_params.outputs.data_set_id }}
 
           cdf_project: "accenture-tiger-training"
           cdf_cluster: "api"
-          data_set_id: 1538933333954333
+          # data_set_id: 1538933333954333
           # schedules_tenant_id: ${{ steps.extract_params.outputs.tenant_id }}
           # deployment_tenant_id: ${{ steps.extract_params.outputs.tenant_id }}
 
