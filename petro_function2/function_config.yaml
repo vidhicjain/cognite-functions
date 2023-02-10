@@ -4,6 +4,8 @@ owner: The Wicked Froge🐸 Team
 cpu: 0.15
 memory: 0.25
 data_set_id: 1538933333954333
+cdf_project: "accenture-tiger-training"
+cdf_cluster: "api"
 env_vars:
   MY_ENV_VAR: "1337"
   which_env: "p-p-p-production"
