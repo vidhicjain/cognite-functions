@@ -1,5 +1,8 @@
-- name: My daily schedule
-  cron: "0 0 * * *"
+- name: My daily schedule at midnight
+  cron: "0 * * * *"
   data:
-    lovely-parameter: True
-    greeting: "World"
+    asset_external_name: "Site:3W:TPT-64-7434"
+    asset_time_series_external_name: "Site:3W:TPT-64-7434_temperature"
+    asset_time_series_id: 166089160696640
+    event_seven_file_name: "DRAWN_00010.csv"
+    file_id: 7083372046210856
