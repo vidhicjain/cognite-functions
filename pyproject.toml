@@ -8,6 +8,7 @@ authors = ["hakon.treider@cognite.com"]
 python = "^3.8"
 pytest-custom-exit-code = "^0, >=0.3"
 cognite-sdk = "^5"
+pandas = "^1.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7"
@@ -20,7 +21,7 @@ atomic = true
 lines_after_imports = 2
 lines_between_types = 1
 line_length = 120
-known_third_party = ["cognite","pytest"]
+known_third_party = ["cognite","pytest","pandas"]
 
 [tool.black]
 line-length = 120
