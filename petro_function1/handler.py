@@ -20,10 +20,9 @@ def handle(data, client):
         ts_internal_id = data.get("asset_time_series_id")
         print(f"ts_internal_id :{ts_internal_id}")
         file_content = client.files.download_bytes(id=file_internal_id)
-        print(f"downloaded file :{type(file_content)}")
+        # print(f"downloaded file :{type(file_content)}")
 
-        data = BytesIO(file_content)
-        df = pd.read_csv(data)
+        df = pd.read_csv(BytesIO(file_content))
         df_t_tpt = df[["T-TPT"]]
         # Add Timeseries Id to the DF
         df_t_tpt.columns = ts_internal_id
@@ -32,7 +31,8 @@ def handle(data, client):
         print(
             f'Successfully inserted data points to the time series : {data.get("asset_time_series_external_name")} for asset : {data.get("asset_external_name")}'
         )
-        return df_t_tpt.shape
+
     except (CogniteAPIError, ValueError, CogniteException) as error:
         print(f"Error occured {error.message}")
-        return error.message
+
+    return data
