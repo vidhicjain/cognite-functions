@@ -1,5 +1,5 @@
 - name: My daily schedule at midnight
-  cron: "0 * * * *"
+  cron: "1 0 * * *"
   data:
     asset_external_name: "Site:3W:TPT-64-7434"
     asset_time_series_external_name: "Site:3W:TPT-64-7434_temperature"
