@@ -24,7 +24,6 @@ def handle(data, client):
 
         print(f"downloaded file :{type(file_content)}")
 
-
         df = pd.read_csv(BytesIO(file_content))
         df_t_tpt = df[["T-TPT"]]
         # Add Timeseries Id to the DF
@@ -58,6 +57,5 @@ def handle(data, client):
     except (CogniteAPIError, ValueError, CogniteException) as error:
 
         print(f"Error occured {error}")
-
 
     return data
