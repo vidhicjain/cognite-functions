@@ -23,7 +23,8 @@ def handle(data, client):
         file_content = client.files.download_bytes(id=file_internal_id)
         print(f"downloaded file :{type(file_content)}")
 
-        df = pd.read_csv(BytesIO(file_content))
+        df = pd.read_csv(BytesIO(file_content), index_col=0, parse_dates=True)
+        print(f"DF1 :{df.head(n=5)}")
         df_t_tpt = df[["P-PDG"]]
         # Add Timeseries Id to the DF
         df_t_tpt.columns = [ts_internal_id]

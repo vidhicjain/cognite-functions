@@ -24,7 +24,8 @@ def handle(data, client):
 
         print(f"downloaded file :{type(file_content)}")
 
-        df = pd.read_csv(BytesIO(file_content))
+        df = pd.read_csv(BytesIO(file_content), index_col=0, parse_dates=True)
+        print(f"DF1 :{df.head(n=5)}")
         df_t_tpt = df[["T-TPT"]]
         # Add Timeseries Id to the DF
 
