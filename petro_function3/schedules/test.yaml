@@ -1,0 +1,8 @@
+- name: My daily schedule at midnight
+  cron: "1 0 * * *"
+  data:
+    asset_external_name: "Site:3W:TPT-64-7434"
+    asset_time_series_external_name: "Site:3W:TPT-64-7434_pressure"
+    asset_time_series_id: 8779778044728928
+    event_seven_file_name: "DRAWN_00010.csv"
+    file_id: 7083372046210856

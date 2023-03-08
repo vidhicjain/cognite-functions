@@ -12,6 +12,7 @@ jobs:
         (
         "petro_function1"
         "petro_function2"
+        "petro_function3"
         )
       trigger_deploy_all_folders: >-
         (

@@ -10,6 +10,7 @@ jobs:
         function:
           - petro_function1
           - petro_function2
+          - petro_function3
     steps:
       - uses: actions/checkout@v2
 
