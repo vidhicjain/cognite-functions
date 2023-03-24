@@ -10,9 +10,9 @@ jobs:
     with:
       deploy_folders: >-
         (
-        "petro_function1"
-        "petro_function2"
-        "petro_function3"
+
+        "simulate_daily_events"
+
         )
       trigger_deploy_all_folders: >-
         (

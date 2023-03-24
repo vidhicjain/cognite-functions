@@ -8,9 +8,10 @@ jobs:
     strategy:
       matrix:
         function:
-          - petro_function1
-          - petro_function2
-          - petro_function3
+
+          - simulate_daily_events
+
+
     steps:
       - uses: actions/checkout@v2
 
