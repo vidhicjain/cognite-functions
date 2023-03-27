@@ -118,7 +118,7 @@ def create_events_for_asset(
         df_to_load["Time"] = df_to_load["timestamp"].dt.time
 
         unique_values = list(df_to_load["Date"].unique())
-        unique_values.extend([today,yesterday])
+        unique_values.extend([today, yesterday])
         print(f"length of list : {len(unique_values)}")
         if len(unique_values) == 3:
             print(f"inside if : {unique_values}")
