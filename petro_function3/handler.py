@@ -7,7 +7,8 @@
 from io import BytesIO
 import pandas as pd
 from cognite.client.exceptions import CogniteAPIError, CogniteException
-from datetime import date, timedelta
+from datetime import datetime, timedelta
+from create_event_timeseries import populate_timeseries
 
 
 def handle(data, client):
@@ -17,39 +18,57 @@ def handle(data, client):
     print(data)
 
     try:
-        file_internal_id = data.get("file_id", 7083372046210856)
-        ts_internal_id = data.get("asset_time_series_id")
-        print(f"ts_internal_id :{ts_internal_id}")
-        file_content = client.files.download_bytes(id=file_internal_id)
+        timeseries = data.get("timeseries")
+        print(data.get("asset_time_series_id"))
+        ts_external_id = data.get("asset_time_series_externalId")
+        ts_data = client.time_series.retrieve(external_id=ts_external_id).to_pandas()
+        print(ts_data)
+        ts_internal_id = int(ts_data.loc["id"])
+        ts_from = data.get("ts_from")
+        ts_to = data.get("ts_to")
 
-        print(f"downloaded file :{type(file_content)}")
+        if ts_from == '' or ts_to== '':
+            ts_from=str(datetime.today().strftime('%Y-%m-%d'))
+            ts_to = str(datetime.today().strftime('%Y-%m-%d'))
+            ts_from = datetime.strptime(ts_from, '%Y-%m-%d').date()
+            ts_to = datetime.strptime(ts_to, '%Y-%m-%d').date()
+        else:
+            ts_from = datetime.strptime(ts_from, '%m-%d-%Y').date()
+            ts_to = datetime.strptime(ts_to, '%m-%d-%Y').date()
+        
+        ts_start_date = int(pd.Timestamp(ts_from).timestamp()*1000)
+        ts_end_date = pd.Timestamp(ts_to)
+        ts_end_date = ts_end_date.replace(hour=23,minute=59,second=59)
+        ts_end_date = int(pd.Timestamp(ts_end_date).timestamp()*1000)
 
-        df = pd.read_csv(BytesIO(file_content), index_col=0, parse_dates=True)
-        print(f"DF1 :{df.head(n=5)}")
-        df_t_tpt = df[["P-TPT"]]
-        # Add Timeseries Id to the DF
+        # first delete the ts in 3W in between start and end dates
+        ts_to_delete = client.time_series.data.retrieve(external_id=[ts_external_id],limit=None,start=ts_start_date,end=ts_end_date).to_pandas()
+        print(ts_to_delete)
+        if not ts_to_delete.empty:
+            client.time_series.data.delete_range(start=ts_start_date, end=ts_end_date, external_id=ts_external_id)
 
-        df_t_tpt.columns = [ts_internal_id]
-        df_to_load = df_t_tpt
-        df_to_load.reset_index(inplace=True)
+        date_list = []
 
-        # Split the timestamp into date and time and get unique values of date to replace with current date time
-        today = date.today()
-        yesterday = today - timedelta(days=1)
-        df_to_load["Date"] = df_to_load["timestamp"].dt.date
-        df_to_load["Time"] = df_to_load["timestamp"].dt.time
+        while ts_from <= ts_to:
+            date_list.append(ts_from)
+            ts_from += timedelta(days=1)
 
-        unique_values = list(df_to_load["Date"].unique())
-        unique_values.extend([yesterday, today])
+        for ts in timeseries:
 
-        df_to_load.loc[df_to_load["Date"] == unique_values[0], "Date"] = unique_values[2]
-        df_to_load.loc[df_to_load["Date"] == unique_values[1], "Date"] = unique_values[3]
+            ts_data= ts["timeseries_data"]
+            for days in date_list:
 
-        df_to_load["timestamp"] = pd.to_datetime(df_to_load["Date"].astype(str) + " " + df_to_load["Time"].astype(str))
-        df_to_load = df_to_load.set_index("timestamp")
-        df_to_load.drop(["Date", "Time"], inplace=True, axis=1)
-        print(f"DF :{df_to_load.head(n=5)}")
-        client.datapoints.insert_dataframe(df_to_load, dropna=True, external_id_headers=False)
+                ts_to_simulate_for_day_of_a_week = [
+                    day for day in ts_data if day["id"] == days.isoweekday()]
+                print(f'event : {ts_to_simulate_for_day_of_a_week} day : {days}')
+
+                # populate_timeseries(
+                #     ts_internal_id=ts_internal_id,
+                #     ts_external_id=ts_external_id,
+                #     file_external_id= ts_to_simulate_for_day_of_a_week[0]["file_external_id"], 
+                #     c= client,
+                #     event_date= days
+                # )
 
         print(
             f'Successfully inserted data points to the time series : {data.get("asset_time_series_external_name")} for asset : {data.get("asset_external_name")}'

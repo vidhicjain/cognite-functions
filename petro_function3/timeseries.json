@@ -1,0 +1,58 @@
+{
+  "name": "My daily schedule at midnight",
+  "cron": "1 0 * * *",
+  "ts_from": "03-31-2023",
+  "ts_to": "04-14-2023",
+  "asset_external_name": "Site:3W:TPT-64-7434",
+  "asset_time_series_external_name": "Site:3W:TPT-64-7434_pressure",
+  "asset_time_series_externalId":"Site:3W:TPT-64-7434_PRESSURE_TS",
+  "asset_time_series_id": 8779778044728928,
+  "timeseries": [
+    {
+        "timeseries_data":[
+            {
+                "id": 1,
+                "event_type": 1,
+                "file_external_id": "1-DRAWN_00009.csv",
+                "file_name": "DRAWN_00009.csv"
+            },
+            {
+                "id": 2,
+                "event_type": 3,
+                "file_external_id": "3-SIMULATED_00074.csv",
+                "file_name": "SIMULATED_00074.csv"
+            },
+            {
+                "id": 3,
+                "event_type": 4,
+                "file_external_id": "4-WELL-00001_20170320190146.csv",
+                "file_name": "WELL-00001_20170320190146.csv"
+            },
+            {
+                "id": 4,
+                "event_type": 5,
+                "file_external_id": "5-SIMULATED_00439.csv",
+                "file_name": "SIMULATED_00439.csv"
+            },
+            {
+                "id": 5,
+                "event_type": 6,
+                "file_external_id": "6-WELL-00002_20140212170333.csv",
+                "file_name": "WELL-00002_20140212170333.csv"
+            },
+            {
+                "id": 6,
+                "event_type": 7,
+                "file_external_id": "7-DRAWN_00010.csv",
+                "file_name": "DRAWN_00010.csv"
+            },
+            {
+                "id": 7,
+                "event_type": 8,
+                "file_external_id": "8-SIMULATED_00001.csv",
+                "file_name": "SIMULATED_00001.csv"
+            }
+        ]
+      }
+    ]
+   }
